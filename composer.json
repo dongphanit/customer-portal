@@ -13,12 +13,10 @@
         "oro/platform-serialised-fields": "4.1.*",
         "oro/calendar-bundle": "4.1.*",
         "oro/marketing": "4.1.*",
-        "oro/commerce": "4.1.*"
+        "oro/commerce": "4.1.*",
+        "bower-asset/prism": "1.6.0"
     },
     "extra": {
-        "npm": {
-            "prismjs": "1.6.0"
-        },
         "branch-alias": {
             "dev-master": "4.1-dev"
         }
@@ -27,6 +25,10 @@
         "oro": {
             "type": "composer",
             "url": "https://packagist.orocrm.com"
+        },
+        "asset-packagist": {
+            "type": "composer",
+            "url": "https://asset-packagist.orocrm.com"
         }
     },
     "minimum-stability": "dev",
