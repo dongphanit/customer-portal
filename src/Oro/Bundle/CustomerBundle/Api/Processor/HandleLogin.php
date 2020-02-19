@@ -100,6 +100,7 @@ class HandleLogin implements ProcessorInterface
             $model->getPassword(),
             $this->authenticationProviderKey
         );
+        
         if (!$this->authenticationProvider->supports($token)) {
             throw new \LogicException(sprintf(
                 'Invalid authentication provider. The provider key is "%s".',

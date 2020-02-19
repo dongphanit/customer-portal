@@ -3,8 +3,30 @@ api:
         Oro\Bundle\CustomerBundle\Api\Model\Login:
             alias: login
             plural_alias: login
-
+        Oro\Bundle\CustomerBundle\Api\Model\Contact:
+            alias: lstphone
+            plural_alias: lstphone
     entities:
+        Oro\Bundle\CustomerBundle\Api\Model\Contact:
+            # documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/login.md'
+            fields:
+                lstPhone:
+                    data_type: string
+            actions:
+                create:
+                    description: Get API Access Key
+                    fields:
+                        lstPhone:
+                            direction: input-only
+                            form_options:
+                                constraints  g:
+                                    - NotBlank: ~
+                    status_codes:
+                        201: false
+                        200: Returned when the credentials are valid and API access key exists
+                        403: Returned when the credentials are not valid or API access key does not exist
+                        409: false
+
         Oro\Bundle\CustomerBundle\Api\Model\Login:
             documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/login.md'
             fields:
@@ -42,13 +64,7 @@ api:
                         403: Returned when the credentials are not valid or API access key does not exist
                         409: false
 
-        Oro\Bundle\CustomerBundle\Entity\Customer:
-            documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/customer.md'
-            actions:
-                create: false
-                update: false
-                delete: false
-                delete_list: false
+  
 
         Oro\Bundle\CustomerBundle\Entity\CustomerGroup:
             documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/customer_group.md'
@@ -70,6 +86,7 @@ api:
                 update: false
                 delete: false
                 delete_list: false
+
 
         Oro\Bundle\CustomerBundle\Entity\CustomerUser:
             documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/customer_user.md'
@@ -174,8 +191,21 @@ api:
             # of the customer address API resource
             actions: false
 
+        Oro\Bundle\CustomerBundle\Entity\CustomerTest:
+            documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/customer_test.md'
+            # this entity does not have own API resource,
+            # but it should be defined to correct work of "types" property
+            # of the customer address API resource
+            actions: true
+
+        Oro\Bundle\CustomerBundle\Entity\CusOrganiztion:
+            # this entity does not have own API resource,
+            # but it should be defined to correct work of "types" property
+            # of the customer address API resource
+            actions: true
+            
         Oro\Bundle\CustomerBundle\Entity\CustomerUserAddress:
-            documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/customer_user_address.md'
+            # documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/customer_user_address.md'
             fields:
                 createdAt:
                     property_path: created
@@ -235,4 +265,6 @@ api:
             # this entity does not have own API resource,
             # but it should be defined to correct work of "types" property
             # of the customer user address API resource
-            actions: false
+            actions: true
+
+                
