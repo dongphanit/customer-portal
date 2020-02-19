@@ -208,3 +208,7 @@ api:
             # but it should be defined to correct work of "types" property
             # of the customer user address API resource
             actions: false
+
+        # Oro\Bundle\CustomerBundle\Entity\CusOrganiztion:
+        #     documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/cus_organiztion.md'
+        #     actions: true

@@ -522,6 +522,46 @@ class CustomerUser extends ExtendCustomerUser implements
      */
     protected $username;
 
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $phone;
+
+
+    /**
+     * Set phone number
+     *
+     * @param string $phone
+     *
+     * @return CustomerUserAddress
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone number
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+
     /**
      * @var bool
      *

@@ -11,6 +11,7 @@ api:
                             order_by:
                                 name: ASC
 
+
         Oro\Bundle\CustomerBundle\Entity\CustomerUser:
             fields:
                 addresses:

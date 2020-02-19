@@ -125,6 +125,8 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
      */
     protected $parent;
 
+
+    
     /**
      * @var Collection|Customer[]
      *
@@ -237,6 +239,25 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
      */
     protected $organization;
 
+
+    
+    /**
+     * @var Collection|CusOrganiztion[]
+     *
+     * @ORM\OneToMany(targetEntity="Oro\Bundle\CustomerBundle\Entity\CusOrganiztion", mappedBy="customer")
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          },
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $cusOrganizations;
+
     /**
      * @var Collection|User[]
      *
@@ -305,6 +326,7 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
         $this->addresses = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->salesRepresentatives = new ArrayCollection();
+        $this->organizations = new ArrayCollection();
     }
 
     /**
@@ -685,4 +707,49 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
     {
         return $this->users->contains($customerUser);
     }
+
+    
+    /**
+     * @return Collection|User[]
+     */
+    public function getOrganizations()
+    {
+        return $this->organizations;
+    }
+
+    /**
+     * @param Organization $organization
+     * @return $this
+     */
+    public function addOrganizations(Organization $organization)
+    {
+        if (!$this->organizations->contains($organization)) {
+            $this->organizations->add($organization);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Organization $organization
+     * @return $this
+     */
+    public function removeOrganizations(Organization $organization)
+    {
+        if ($this->organizations->contains($organization)) {
+            $this->organizations->removeElement($organization);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasOrganizations()
+    {
+        return $this->organizations->count() > 0;
+    }
+
+   
 }
