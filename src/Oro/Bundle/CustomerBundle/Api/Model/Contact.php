@@ -30,4 +30,31 @@ class Contact
         return $this->lstPhone;
     }
 
+    /**
+     * @var Collection|Customer[]
+     */
+    protected $output;
+
+    /**
+     * Gets the API access key that should be used for subsequent API requests.
+     *
+     * @return string|null
+     */
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+    /**
+     * Sets the API access key belongs to the customer user with the given email and password.
+     *
+     * @param string $output
+     */
+    public function setOutput($output)
+    {
+        $this->output = $output;
+    }
+
+
+
 }

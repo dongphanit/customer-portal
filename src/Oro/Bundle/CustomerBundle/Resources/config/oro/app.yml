@@ -27,6 +27,10 @@ security:
             pattern: '^%oro_api.rest.prefix%login'
             security: false
             stateless: true
+        frontend_api_lstphone:
+            pattern: '^%oro_api.rest.prefix%lstphone'
+            security: false
+            stateless: true
         frontend_api_wsse_secured:
             pattern:   '%oro_api.rest.pattern%'
             provider:  commerce_customer_user

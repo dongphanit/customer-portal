@@ -12,15 +12,16 @@ api:
             fields:
                 lstPhone:
                     data_type: string
+                output:
+                    data_type: array
             actions:
                 create:
                     description: Get API Access Key
                     fields:
                         lstPhone:
                             direction: input-only
-                            form_options:
-                                constraints  g:
-                                    - NotBlank: ~
+                        output:
+                            direction: output-only
                     status_codes:
                         201: false
                         200: Returned when the credentials are valid and API access key exists

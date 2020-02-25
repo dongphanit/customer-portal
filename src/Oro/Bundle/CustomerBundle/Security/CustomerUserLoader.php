@@ -9,6 +9,7 @@ use Oro\Bundle\CustomerBundle\Entity\Repository\CustomerUserRepository;
 use Oro\Bundle\SecurityBundle\Authentication\TokenAccessor;
 use Oro\Bundle\UserBundle\Entity\UserInterface;
 use Oro\Bundle\UserBundle\Security\UserLoaderInterface;
+use Oro\Bundle\OrganizationBundle\Entity\Organization;
 
 /**
  * Loads CustomerUser entity from the database for the authentication system.
@@ -63,7 +64,14 @@ class CustomerUserLoader implements UserLoaderInterface
         // username and email for customer users are equal
         return $this->loadUserByEmail($username);
     }
-
+    
+    function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+    
+        echo "<script>console.log('Cusomers:Loader " . $output . "' );</script>";
+    }
     /**
      * {@inheritdoc}
      */
@@ -72,9 +80,15 @@ class CustomerUserLoader implements UserLoaderInterface
         $useLowercase = (bool)$this->configManager->get('oro_customer.case_insensitive_email_addresses_enabled');
 
         $organization = $this->tokenAccessor->getOrganization();
-        if (null !== $organization) {
-            return $this->getRepository()->findUserByEmailAndOrganization($email, $organization, $useLowercase);
-        }
+        // if (null === $organization){
+        //     $organization = new Organization();
+        //     $organization -> setId(1);
+        //     $organization -> setName('B2B Order');
+        // }
+        // if (null !== $organization) {
+        //     return $this->getRepository()->findUserByEmailAndOrganization($email, $organization, $useLowercase);
+        // }
+        
 
         return $this->getRepository()->findUserByEmail($email, $useLowercase);
     }
