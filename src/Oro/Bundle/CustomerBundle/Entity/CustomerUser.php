@@ -494,6 +494,10 @@ class CustomerUser extends ExtendCustomerUser implements
      */
     protected $organization;
 
+    // public function setOrganization(Organization $organization = null){
+    //     $this->organization = $organization;
+    // }
+
     /**
      * @var int
      *
@@ -522,7 +526,7 @@ class CustomerUser extends ExtendCustomerUser implements
      */
     protected $username;
 
-        /**
+    /**
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=255, nullable=true)

@@ -8,6 +8,7 @@ use Oro\Bundle\ConfigBundle\Config\ConfigManager;
 use Oro\Bundle\CustomerBundle\Api\Model\Contact;
 use Oro\Bundle\CustomerBundle\Entity\CustomerUser;
 use Oro\Bundle\CustomerBundle\Entity\CustomerUserApi;
+use Oro\Bundle\CustomerBundle\Entity\Customer;
 use Oro\Component\ChainProcessor\ContextInterface;
 use Oro\Component\ChainProcessor\ProcessorInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
@@ -16,7 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Contracts\Translation\TranslatorInterface;
-
+use Oro\Bundle\CustomerBundle\Provider\CustomerContactProvider;
 /**
  * Checks whether the login credentials are valid
  * and if so, sets API access key of authenticated customer user to the model.
@@ -27,7 +28,7 @@ class HandleContact implements ProcessorInterface
     private $authenticationProviderKey;
 
     /** @var AuthenticationProviderInterface */
-    private $authenticationProvider;
+    private $customerContactProvider;
 
     /** @var ConfigManager */
     private $configManager;
@@ -40,19 +41,12 @@ class HandleContact implements ProcessorInterface
 
     /**
      * @param string                          $authenticationProviderKey
-     * @param AuthenticationProviderInterface $authenticationProvider
-     * @param ConfigManager                   $configManager
-     * @param DoctrineHelper                  $doctrineHelper
-     * @param TranslatorInterface             $translator
      */
     public function __construct(
         string $authenticationProviderKey,
-        AuthenticationProviderInterface $authenticationProvider,
-        ConfigManager $configManager,
-        DoctrineHelper $doctrineHelper,
-        TranslatorInterface $translator
+        CustomerContactProvider $customerContactProvider
     ) {
-      
+        $this->customerContactProvider = $customerContactProvider;
     }
 
     function debug_to_console($data) {
@@ -71,12 +65,33 @@ class HandleContact implements ProcessorInterface
         /** @var CreateContext $context */
 
         $model = $context->getResult();
-        if (!$model instanceof Contact || $model->getApiKey()) {
-            // the request is already handled
-            return;
-        }
-        debug_to_console("Moomooo");
+        $lstPhone = explode(",", $model -> getLstPhone());
+        $results = $this->customerContactProvider->getCustomerContactWithPhones($lstPhone);
+        $model-> setOutput($results);
+    
+
+        // $repository = $this->getCustomerRepository();
+        // $children = $repository->getCustomersWithLstPhone($model->getLstPhone(), $this->aclHelper);
+
+        // throw new \LogicException(sprintf(
+        //     'Invalid authentication provider. The provider key is "%s".',
+        //     $model->getLstPhone()
+        // ));
        
+        // if (!$model instanceof Contact || $model->getApiKey()) {
+        //     // the request is already handled
+        //     return;
+        // }
+        // $this -> debug_to_console('hahha');
+        // $model->setApiKey($apiKey);
+    }
+
+    /**
+     * @return CustomerRepository
+     */
+    protected function getCustomerRepository()
+    {
+        return $this->doctrine->getManagerForClass(Customer::class)->getRepository(Customer::class);
     }
 
 }

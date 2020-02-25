@@ -43,6 +43,27 @@ class CustomerRepository extends EntityRepository implements BatchIteratorInterf
         return array_column($result, 'id');
     }
 
+
+    /**
+     * @param int $customerId
+     * @param AclHelper $aclHelper
+     * @return array
+     */
+    public function getCustomersWithLstPhone($lstPhone, AclHelper $aclHelper = null)
+    {
+        $phones = array($lstPhone);
+        $qb = $this->createQueryBuilder('customer');
+        $qb->select()
+            ->add('where', $qb->expr()->in('customer.phone', $lstPhone));
+
+        if ($aclHelper) {
+            $query = $aclHelper->apply($qb);
+        } else {
+            $query = $qb->getQuery();
+        }      
+        return $query->getArrayResult();
+    }
+
     /**
      * @param int $customerId
      * @param AclHelper $aclHelper
