@@ -52,17 +52,18 @@ class OrganizationGuesser implements OrganizationGuesserInterface
         }
 
         if ($user instanceof CustomerUser) {
-            if ($token instanceof OrganizationAwareTokenInterface) {
-                $organization = $token->getOrganization();
-                if (null !== $organization) {
-                    return $organization;
-                }
-            }
+            return $user -> getOrganization();
+            // if ($token instanceof OrganizationAwareTokenInterface) {
+            //     $organization = $token->getOrganization();
+            //     if (null !== $organization) {
+            //         return $organization;
+            //     }
+            // }
 
-            $website = $this->websiteManager->getCurrentWebsite();
-            if (null !== $website) {
-                return $website->getOrganization();
-            }
+            // $website = $this->websiteManager->getCurrentWebsite();
+            // if (null !== $website) {
+            //     return $website->getOrganization();
+            // }
         }
 
         return null;
