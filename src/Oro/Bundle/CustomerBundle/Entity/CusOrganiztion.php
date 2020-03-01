@@ -17,14 +17,22 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 class CusOrganiztion
 {
 
-   /**
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
- 
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ConfigField(
+     *     defaultValues={
+     *         "importexport"={
+     *             "order"=10,
+     *             "identity"=true
+     *         }
+     *     }
+     * )
      */
-    protected $id;
+    public $id;
 
     /**
      * @var integer
@@ -42,18 +50,18 @@ class CusOrganiztion
      *      }
      * )
      */
-    protected $cus_status;
+    public $cus_status;
 
     /** 
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\CustomerBundle\Entity\Customer", inversedBy="cusOrganizations") 
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=false) 
      */
-    protected $customer;
+    public $customer;
 
     /** 
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization", inversedBy="cusOrganizations") 
      * @ORM\JoinColumn(name="organiztion_id", referencedColumnName="id", nullable=false) 
      */
-    protected $organiztion;
+    public $organiztion;
 
 }
