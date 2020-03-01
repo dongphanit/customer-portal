@@ -200,10 +200,15 @@ api:
             actions: true
 
         Oro\Bundle\CustomerBundle\Entity\CusOrganiztion:
+            documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/cus_organiztion.md'
             # this entity does not have own API resource,
             # but it should be defined to correct work of "types" property
             # of the customer address API resource
-            actions: true
+            fields:
+                customer:
+                    form_options:
+                        mapped: true
+
             
         Oro\Bundle\CustomerBundle\Entity\CustomerUserAddress:
             # documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/customer_user_address.md'
