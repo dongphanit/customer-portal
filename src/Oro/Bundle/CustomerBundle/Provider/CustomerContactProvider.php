@@ -45,7 +45,7 @@ class CustomerContactProvider
     }
 
     /**
-     * @return CustomerUserAddress[]
+     * @return []
      */
     public function getCustomerContactWithPhones($lstPhone)
     {
