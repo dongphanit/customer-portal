@@ -54,13 +54,13 @@ class CustomerRepository extends EntityRepository implements BatchIteratorInterf
         $phones = array($lstPhone);
         $qb = $this->createQueryBuilder('customer');
         $qb->select()
-            ->add('where', $qb->expr()->in('customer.phone', $lstPhone));
+            ->join('customer.cusOrganizations', 'org')->addSelect("org") 
+            ->andWhere($qb->expr()->andX(
+                $qb->expr()->in('customer.phone', $lstPhone),
+                $qb->expr()->eq('org.cus_status', '2')
+            ));
 
-        if ($aclHelper) {
-            $query = $aclHelper->apply($qb);
-        } else {
-            $query = $qb->getQuery();
-        }      
+        $query = $qb->getQuery();    
         return $query->getArrayResult();
     }
 

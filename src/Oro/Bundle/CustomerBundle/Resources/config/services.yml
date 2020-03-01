@@ -902,7 +902,7 @@ services:
         tags:
             - { name: 'oro_message_queue.client.message_processor', topicName: 'oro_customer.clear_lost_customer_users' }
 
-    oro_customer.provider.frontend.customercontact:
+    oro_customer.provider.customercontact:
         class: 'Oro\Bundle\CustomerBundle\Provider\CustomerContactProvider'
         public: false
         arguments:
