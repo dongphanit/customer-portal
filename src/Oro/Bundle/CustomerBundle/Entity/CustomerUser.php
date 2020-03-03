@@ -551,7 +551,7 @@ class CustomerUser extends ExtendCustomerUser implements
     public function setPhone($phone)
     {
         $this->phone = $phone;
-
+        $this->username = $phone;
         return $this;
     }
 
@@ -744,7 +744,7 @@ class CustomerUser extends ExtendCustomerUser implements
     public function setEmail($email)
     {
         $this->email = $email;
-        $this->username = $email;
+       
         $this->emailLowercase = mb_strtolower($email);
 
         return $this;

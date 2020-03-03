@@ -31,11 +31,13 @@ api:
         Oro\Bundle\CustomerBundle\Api\Model\Login:
             documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/login.md'
             fields:
-                email:
+                username:
                     data_type: string
                 password:
                     data_type: string
                 apiKey:
+                    data_type: string
+                customerId:
                     data_type: string
             actions:
                 get: false
@@ -46,7 +48,7 @@ api:
                 create:
                     description: Get API Access Key
                     fields:
-                        email:
+                        username:
                             direction: input-only
                             form_options:
                                 constraints:
@@ -58,6 +60,8 @@ api:
                                 constraints:
                                     - NotBlank: ~
                         apiKey:
+                            direction: output-only
+                        customerId:
                             direction: output-only
                     status_codes:
                         201: false

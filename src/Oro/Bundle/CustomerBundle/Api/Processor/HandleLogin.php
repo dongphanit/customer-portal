@@ -86,6 +86,7 @@ class HandleLogin implements ProcessorInterface
         }
 
         $model->setApiKey($apiKey);
+        $model->setCustomerId($authenticatedUser->getCustomer()->getId());
     }
 
     /**
@@ -96,7 +97,7 @@ class HandleLogin implements ProcessorInterface
     private function authenticate(Login $model): TokenInterface
     {
         $token = new UsernamePasswordToken(
-            $model->getEmail(),
+            $model->getUsername(),
             $model->getPassword(),
             $this->authenticationProviderKey
         );
