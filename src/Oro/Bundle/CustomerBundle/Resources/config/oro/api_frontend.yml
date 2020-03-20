@@ -3,30 +3,30 @@ api:
         Oro\Bundle\CustomerBundle\Api\Model\Login:
             alias: login
             plural_alias: login
-        Oro\Bundle\CustomerBundle\Api\Model\Contact:
-            alias: lstphone
-            plural_alias: lstphone
+        # Oro\Bundle\CustomerBundle\Api\Model\Contact:
+        #     alias: lstphone
+        #     plural_alias: lstphone
     entities:
-        Oro\Bundle\CustomerBundle\Api\Model\Contact:
-            # documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/login.md'
-            fields:
-                lstPhone:
-                    data_type: string
-                output:
-                    data_type: array
-            actions:
-                create:
-                    description: Get API Access Key
-                    fields:
-                        lstPhone:
-                            direction: input-only
-                        output:
-                            direction: output-only
-                    status_codes:
-                        201: false
-                        200: Returned when the credentials are valid and API access key exists
-                        403: Returned when the credentials are not valid or API access key does not exist
-                        409: false
+        # Oro\Bundle\CustomerBundle\Api\Model\Contact:
+        #     # documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/login.md'
+        #     fields:
+        #         lstPhone:
+        #             data_type: string
+        #         output:
+        #             data_type: array
+        #     actions:
+        #         create:
+        #             description: Get API Access Key
+        #             fields:
+        #                 lstPhone:
+        #                     direction: input-only
+        #                 output:
+        #                     direction: output-only
+        #             status_codes:
+        #                 201: false
+        #                 200: Returned when the credentials are valid and API access key exists
+        #                 403: Returned when the credentials are not valid or API access key does not exist
+        #                 409: false
 
         Oro\Bundle\CustomerBundle\Api\Model\Login:
             documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/login.md'
@@ -38,6 +38,8 @@ api:
                 apiKey:
                     data_type: string
                 customerId:
+                    data_type: string
+                customerUserId:
                     data_type: string
             actions:
                 get: false
@@ -61,7 +63,11 @@ api:
                                     - NotBlank: ~
                         apiKey:
                             direction: output-only
+                            
                         customerId:
+                            direction: output-only
+
+                        customerUserId:
                             direction: output-only
                     status_codes:
                         201: false
@@ -96,24 +102,18 @@ api:
         Oro\Bundle\CustomerBundle\Entity\CustomerUser:
             documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/customer_user.md'
             fields:
-                username:
-                    exclude: true
-                passwordChangedAt:
-                    exclude: true
-                passwordRequestedAt:
-                    exclude: true
                 emailLowercase:
                     exclude: true
-                isGuest:
-                    exclude: true
-                lastLogin:
-                    exclude: true
-                loginCount:
-                    exclude: true
-                enabled:
+                passwordChangedAt:
                     form_options:
                         mapped: false
-                confirmed:
+                passwordRequestedAt:
+                    form_options:
+                        mapped: false
+                loginCount:
+                    form_options:
+                        mapped: false
+                lastLogin:
                     form_options:
                         mapped: false
             actions:
@@ -123,6 +123,7 @@ api:
                             exclude: false # set manually because this field is excluded globally
                             form_options:
                                 property_path: plainPassword
+
             subresources:
                 addresses:
                     actions:
@@ -174,6 +175,7 @@ api:
                         property_path: types.type
                         allow_array: true
             actions:
+                create: true
                 update:
                     fields:
                         customer:
@@ -276,5 +278,25 @@ api:
             # but it should be defined to correct work of "types" property
             # of the customer user address API resource
             actions: true
+        
+        Oro\Bundle\CustomerBundle\Entity\Customer:
+            documentation_resource: '@OroCustomerBundle/Resources/doc/api/customer.md'
+            fields:
+                dataChannel:
+                    exclude: true
+                cusOrganizations:
+                    exclude: true
+            filters:
+                fields:
+                    createdAt:
+                        exclude: false
+                    updatedAt:
+                        exclude: false
+            subresources:
+                addresses:
+                    actions:
+                        update_relationship: false
+                        add_relationship: false
+                        delete_relationship: false
 
                 

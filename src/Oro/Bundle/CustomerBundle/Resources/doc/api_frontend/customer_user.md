@@ -30,10 +30,31 @@ Example:
   "data": {
     "type": "customerusers",
     "attributes": {
+      "confirmed": true,
       "email": "AmandaFCole@example.org",
       "firstName": "Amanda",
-      "lastName": "Cole",
+      "coutryCode": "+84",
+      "username": "0039293293",   
+      "phone": "098777666",  
+      "lastName": "Cole",     
+      "enabled": true,
       "password": "Password000!"
+    },
+    "relationships": {
+      "roles": {
+        "data": [
+          {
+            "type": "customeruserroles",
+            "id": "1"
+          }
+        ]
+      },
+      "customer": {
+        "data": {
+          "type": "customers",
+          "id": "1"
+        }
+      }
     }
   }
 }
@@ -55,11 +76,18 @@ Example:
 {
   "data": {
     "type": "customerusers",
-    "id": "1",
+    "id": "1",    
     "attributes": {
+      "confirmed": true,
+      "confirmationToken": "abeudjnddddffff",
+      "username": "AmandaRCole@example.org",
       "email": "AmandaMCole@example.org",
-      "firstName": "Amanda",
-      "lastName": "Cole"
+      "coutryCode": "+84",
+      "username": "AmandaFCole@example.org",   
+      "phone": "098777666",  
+      "firstName": "Amanda",     
+      "lastName": "Cole",     
+      "enabled": true
     },
     "relationships": {
       "roles": {
@@ -96,15 +124,42 @@ Delete a collection of customer user records.
 
 ## FIELDS
 
+### customer
+
+#### create
+
+{@inheritdoc}
+
+**The required field.**
+
 ### roles
 
-#### update
+#### create
+
+{@inheritdoc}
+
+**Conditionally required field:**
+*This field is required when **enabled** field value is `true`.*
+
+### enabled
+
+#### create
 
 {@inheritdoc}
 
 **Please note:**
 
-*At least one role must be assigned to an user.*
+*The default value is `true`.*
+
+### confirmed
+
+#### create
+
+{@inheritdoc}
+
+**Please note:**
+
+*The default value is `true`.*
 
 ### email
 
@@ -160,7 +215,7 @@ Delete a collection of customer user records.
 
 *This field is **required** and must remain defined.*
 
-### enabled
+### passwordChangedAt
 
 #### create, update
 
@@ -168,7 +223,23 @@ Delete a collection of customer user records.
 
 **The read-only field. A passed value will be ignored.**
 
-### confirmed
+### passwordRequestedAt
+
+#### create, update
+
+{@inheritdoc}
+
+**The read-only field. A passed value will be ignored.**
+
+### loginCount
+
+#### create, update
+
+{@inheritdoc}
+
+**The read-only field. A passed value will be ignored.**
+
+### lastLogin
 
 #### create, update
 
@@ -199,6 +270,60 @@ Example:
 {
   "data": {
     "type": "customers",
+    "id": "1"
+  }
+}
+```
+{@/request}
+
+### organization
+
+#### get_subresource
+
+Retrieve the record of the organization a specific customer user record belongs to.
+
+#### get_relationship
+
+Retrieve the ID of the organization record which a specific customer user record will belong to.
+
+#### update_relationship
+
+Replace the organization a specific customer user record belongs to.
+
+{@request:json_api}
+Example:
+
+```JSON
+{
+  "data": {
+    "type": "organizations",
+    "id": "1"
+  }
+}
+```
+{@/request}
+
+### owner
+
+#### get_subresource
+
+Retrieve the record of the user who is an owner of a specific customer user record.
+
+#### get_relationship
+
+Retrieve the ID of the user who is an owner of a specific customer user record.
+
+#### update_relationship
+
+Replace the owner of a specific customer user record.
+
+{@request:json_api}
+Example:
+
+```JSON
+{
+  "data": {
+    "type": "users",
     "id": "1"
   }
 }
@@ -269,6 +394,85 @@ Example:
   "data": [
     {
       "type": "customeruserroles",
+      "id": "2"
+    }
+  ]
+}
+```
+{@/request}
+
+### salesRepresentatives
+
+#### get_subresource
+
+Retrieve the sales representatives records assigned to a specific customer user record.
+
+#### get_relationship
+
+Retrieve the IDs of sales representatives records assigned to a specific customer user record.
+
+#### update_relationship
+
+Replace the list of sales representatives assigned to a specific customer user record.
+
+{@request:json_api}
+Example:
+
+```JSON
+{
+  "data": [
+    {
+      "type": "users",
+      "id": "1"
+    },
+    {
+      "type": "users",
+      "id": "2"
+    }
+  ]
+}
+```
+{@/request}
+
+#### add_relationship
+
+Set sales representatives records for a specific customer user record.
+
+{@request:json_api}
+Example:
+
+```JSON
+{
+  "data": [
+    {
+      "type": "users",
+      "id": "1"
+    },
+    {
+      "type": "users",
+      "id": "2"
+    }
+  ]
+}
+```
+{@/request}
+
+#### delete_relationship
+
+Remove sales representatives records from a specific customer user record.
+
+{@request:json_api}
+Example:
+
+```JSON
+{
+  "data": [
+    {
+      "type": "users",
+      "id": "1"
+    },
+    {
+      "type": "users",
       "id": "2"
     }
   ]
