@@ -87,6 +87,7 @@ class HandleLogin implements ProcessorInterface
 
         $model->setApiKey($apiKey);
         $model->setCustomerId($authenticatedUser->getCustomer()->getId());
+        $model->setCustomerUserId($authenticatedUser->getId());
     }
 
     /**
