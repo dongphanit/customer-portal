@@ -18,6 +18,10 @@ class Login
 
     /** @var string */
     private $customerId;
+
+    /** @var string */
+    private $customerUserId;
+
     /**
      * Gets the email.
      *
@@ -96,5 +100,25 @@ class Login
     public function setCustomerId($customerId)
     {
         $this->customerId = $customerId;
+    }
+
+    /**
+     * Gets the API access key that should be used for subsequent API requests.
+     *
+     * @return string|null
+     */
+    public function getCustomerUserId()
+    {
+        return $this->customerUserId;
+    }
+
+    /**
+     * Sets the API access key belongs to the customer user with the given email and password.
+     *
+     * @param string $apiKey
+     */
+    public function setCustomerUserId($customerUserId)
+    {
+        $this->customerUserId = $customerUserId;
     }
 }
