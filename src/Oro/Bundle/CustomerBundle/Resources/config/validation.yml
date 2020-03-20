@@ -67,8 +67,8 @@ Oro\Bundle\CustomerBundle\Entity\CustomerUser:
         plainPassword:
             - NotBlank:
                 groups: [create]
-            - Oro\Bundle\UserBundle\Validator\Constraints\PasswordComplexity:
-                groups: [create, Default]
+            # - Oro\Bundle\UserBundle\Validator\Constraints\PasswordComplexity:
+            #     groups: [create, Default]
         birthday:
             - Date: ~
             - LessThanOrEqual:

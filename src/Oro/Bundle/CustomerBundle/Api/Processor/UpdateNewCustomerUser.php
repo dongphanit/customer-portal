@@ -33,9 +33,9 @@ class UpdateNewCustomerUser implements ProcessorInterface
         /** @var CustomizeFormDataContext $context */
 
         $form = $context->getForm();
-        if (!FormUtil::isSubmittedAndValid($form)) {
-            return;
-        }
+        // if (!FormUtil::isSubmittedAndValid($form)) {
+        //     return;
+        // }
 
         /** @var CustomerUser $user */
         $user = $form->getData();

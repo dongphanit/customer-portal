@@ -15,6 +15,8 @@ api:
                     exclude: true
             filters:
                 fields:
+                    cusOrganizations:
+                        exclude: false
                     createdAt:
                         exclude: false
                     updatedAt:
@@ -38,8 +40,6 @@ api:
         Oro\Bundle\CustomerBundle\Entity\CustomerUser:
             documentation_resource: '@OroCustomerBundle/Resources/doc/api/customer_user.md'
             fields:
-                username:
-                    exclude: true
                 emailLowercase:
                     exclude: true
                 passwordChangedAt:

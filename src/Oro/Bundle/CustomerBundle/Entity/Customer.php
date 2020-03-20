@@ -138,7 +138,21 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
      *      }
      * )
      */
-    protected $phone;
+    public $phone;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="countryCode", type="string", length=255, nullable=true)
+     * @ConfigField(
+     *  defaultValues={
+     *      "entity"={
+     *          "contact_information"="countryCode"
+     *      }
+     *  }
+     * )
+     */
+    protected $countryCode;
 
     /**
      * @var string
@@ -166,8 +180,22 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
      *      }
      * )
      */
-    protected $email;
+    public $email;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $address;
 
     /**
      * @var Collection|Customer[]
@@ -369,6 +397,7 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
         $this->users = new ArrayCollection();
         $this->salesRepresentatives = new ArrayCollection();
         $this->organizations = new ArrayCollection();
+        $this->cusOrganizations    = new ArrayCollection();
     }
 
     /**
@@ -427,6 +456,31 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
     {
         return $this->name;
     }
+
+    /**
+     * Set country code number
+     *
+     * @param string $countryCode
+     *
+     * @return Organization
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    /**
+     * Get phone number
+     *
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
+    }
+
 
     /**
      * @param Customer $parent
@@ -740,6 +794,15 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
         return $this->salesRepresentatives->count() > 0;
     }
 
+    // /**
+    //  * @return bool
+    //  */
+    // public function getCusOrganizations()
+    // {
+    //     return $this->cusOrganizations;
+    // }
+
+
     /**
      * @param CustomerUser $customerUser
      *
@@ -793,5 +856,18 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
         return $this->organizations->count() > 0;
     }
 
-   
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
 }

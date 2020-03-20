@@ -202,6 +202,20 @@ class CustomerUser extends ExtendCustomerUser implements
     protected $emailLowercase;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="countryCode", type="string", length=255, nullable=true)
+     * @ConfigField(
+     *  defaultValues={
+     *      "entity"={
+     *          "contact_information"="countryCode"
+     *      }
+     *  }
+     * )
+     */
+    protected $countryCode;
+
+    /**
      * Name prefix
      *
      * @var string
@@ -589,6 +603,7 @@ class CustomerUser extends ExtendCustomerUser implements
         $this->salesRepresentatives = new ArrayCollection();
         $this->settings = new ArrayCollection();
         $this->apiKeys = new ArrayCollection();
+        $this ->username = "";
         parent::__construct();
     }
 
@@ -723,7 +738,7 @@ class CustomerUser extends ExtendCustomerUser implements
     {
         parent::setUsername($username);
 
-        $this->email = $username;
+        // $this->email = $username;
         $this->emailLowercase = mb_strtolower($username);
 
         return $this;
@@ -756,6 +771,24 @@ class CustomerUser extends ExtendCustomerUser implements
     public function getEmailLowercase()
     {
         return $this->emailLowercase;
+    }
+
+    /**
+     * @param string $countryCode
+     * @return CustomerUser
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->countryCode = $countryCode;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
     }
 
     /**
