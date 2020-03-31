@@ -43,6 +43,26 @@ class CustomerRepository extends EntityRepository implements BatchIteratorInterf
         return array_column($result, 'id');
     }
 
+    /**
+     * @param int $customerId
+     * @param AclHelper $aclHelper
+     * @return array
+     */
+    public function getCustomersByPhone($phone, $countryCode, AclHelper $aclHelper = null)
+    {
+        $qb = $this->createQueryBuilder('customer');
+        $qb->select()
+             ->andWhere($qb->expr()->andX(
+                $qb->expr()->eq('customer.phone', $phone),
+                $qb->expr()->orX(
+                    $qb->expr()->eq('customer.countryCode', $countryCode),
+                    $qb->expr()->isNull('customer.countryCode')
+                    ) 
+            ));
+
+        $query = $qb->getQuery();    
+        return $query->getArrayResult();
+    }
 
     /**
      * @param int $customerId
@@ -54,10 +74,13 @@ class CustomerRepository extends EntityRepository implements BatchIteratorInterf
         $phones = array($lstPhone);
         $qb = $this->createQueryBuilder('customer');
         $qb->select()
-            ->join('customer.cusOrganizations', 'org')->addSelect("org") 
+            ->leftJoin('customer.linkCustomersOrganizations', 'cus_org')->addSelect("cus_org") 
             ->andWhere($qb->expr()->andX(
                 $qb->expr()->in('customer.phone', $lstPhone),
-                $qb->expr()->eq('org.cus_status', '2')
+                $qb->expr()->orX(
+                    $qb->expr()->eq('cus_org.status', '2'),// 2 customer requested friends
+                    $qb->expr()->isNull('cus_org.status')
+                    ) 
             ));
 
         $query = $qb->getQuery();    

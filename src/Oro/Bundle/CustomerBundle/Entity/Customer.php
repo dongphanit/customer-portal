@@ -309,12 +309,17 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
      */
     protected $organization;
 
-
+    /**
+     * @var File $avatar
+     * @ORM\OneToOne(targetEntity="Oro\Bundle\AttachmentBundle\Entity\File", cascade={"persist"})
+     * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    public $avatar;
     
     /**
-     * @var Collection|CusOrganiztion[]
+     * @var Collection|LinkCustomerOrganization[]
      *
-     * @ORM\OneToMany(targetEntity="Oro\Bundle\CustomerBundle\Entity\CusOrganiztion", mappedBy="customer")
+     * @ORM\OneToMany(targetEntity="Oro\Bundle\CustomerBundle\Entity\LinkCustomerOrganization", mappedBy="customer")
      * @ConfigField(
      *      defaultValues={
      *          "dataaudit"={
@@ -326,7 +331,7 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
      *      }
      * )
      */
-    protected $cusOrganizations;
+    public $linkCustomersOrganizations;
 
     /**
      * @var Collection|User[]
@@ -397,7 +402,7 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
         $this->users = new ArrayCollection();
         $this->salesRepresentatives = new ArrayCollection();
         $this->organizations = new ArrayCollection();
-        $this->cusOrganizations    = new ArrayCollection();
+        $this->linkCustomersOrganizations    = new ArrayCollection();
     }
 
     /**
@@ -794,13 +799,13 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
         return $this->salesRepresentatives->count() > 0;
     }
 
-    // /**
-    //  * @return bool
-    //  */
-    // public function getCusOrganizations()
-    // {
-    //     return $this->cusOrganizations;
-    // }
+    /**
+     * @return bool
+     */
+    public function getlinkCustomersOrganizations()
+    {
+        return $this->linkCustomersOrganizations;
+    }
 
 
     /**

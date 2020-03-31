@@ -106,6 +106,7 @@ class CustomerUserRoleVoter extends AbstractEntityVoter
         if ($customer && !$this->getAuthorizationChecker()->isGranted(static::ATTRIBUTE_VIEW, $customer)) {
             return self::ACCESS_DENIED;
         }
+        # test
 
         return self::ACCESS_GRANTED;
     }

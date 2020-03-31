@@ -1,4 +1,4 @@
-# Oro\Bundle\CustomerBundle\Entity\CusOrganiztion
+# Oro\Bundle\CustomerBundle\Entity\LinkCustomerorganization
 
 ## ACTIONS
 
@@ -21,9 +21,9 @@ Example:
 {  
    "data":
   {
-      "type": "cus_organiztions",
+      "type": "cus_organizations",
       "attributes": {
-        "cus_status": 3
+        "status": 3
       },
       "relationships": {
         "customer": {
@@ -32,7 +32,7 @@ Example:
             "id": "1"
           }
         },
-        "organiztion": {
+        "organization": {
           "data": {
             "type": "organizations",
             "id": "1"

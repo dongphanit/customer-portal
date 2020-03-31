@@ -11,10 +11,10 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 
 
-/** @ORM\Table(name="oro_cus_organiztion") 
+/** @ORM\Table(name="oro_link_customer_organization") 
  * @ORM\Entity
  */
-class CusOrganiztion
+class LinkCustomerOrganization
 {
 
     /**
@@ -50,18 +50,18 @@ class CusOrganiztion
      *      }
      * )
      */
-    public $cus_status;
+    public $status;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\CustomerBundle\Entity\Customer", inversedBy="cusOrganizations") 
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\CustomerBundle\Entity\Customer", inversedBy="linkCustomersOrganizations") 
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=false) 
      */
     public $customer;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization", inversedBy="cusOrganizations") 
-     * @ORM\JoinColumn(name="organiztion_id", referencedColumnName="id", nullable=false) 
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization", inversedBy="linkCustomersOrganizations") 
+     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", nullable=false) 
      */
-    public $organiztion;
+    public $organization;
 
 }

@@ -5,19 +5,22 @@ namespace Oro\Bundle\CustomerBundle\Api\Model;
 /**
  * The model for frontend API resource to retrieve API access key by customer user email and password.
  */
-class Contact
+class SearchByPhone
 {
     /** @var string */
-    private $lstPhone;
+    private $phone;
+
+     /** @var string */
+     private $countryCode;
 
     /**
-     * Sets the email.
+     * Sets the phone.
      *
-     * @param string $email
+     * @param string $phone
      */
-    public function setLstPhone($lstPhone)
+    public function setPhone($phone)
     {
-        $this->lstPhone = $lstPhone;
+        $this->phone = $phone;
     }
 
     /**
@@ -25,9 +28,29 @@ class Contact
      *
      * @return string
      */
-    public function getLstPhone()
+    public function getPhone()
     {
-        return $this->lstPhone;
+        return $this->phone;
+    }
+
+    /**
+     * Sets the Country Code.
+     *
+     * @param string $countryCode
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->countryCode = $countryCode;
+    }
+
+    /**
+     * Gets the password.
+     *
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
     }
 
     /**
@@ -54,7 +77,4 @@ class Contact
     {
         $this->data = $data;
     }
-
-
-
 }

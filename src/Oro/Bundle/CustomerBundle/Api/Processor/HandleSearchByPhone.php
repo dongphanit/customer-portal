@@ -22,7 +22,7 @@ use Oro\Bundle\CustomerBundle\Provider\CustomerContactProvider;
  * Checks whether the login credentials are valid
  * and if so, sets API access key of authenticated customer user to the model.
  */
-class HandleContact implements ProcessorInterface
+class HandleSearchByPhone implements ProcessorInterface
 {
     /** @var string */
     private $authenticationProviderKey;
@@ -65,8 +65,7 @@ class HandleContact implements ProcessorInterface
         /** @var CreateContext $context */
 
         $model = $context->getResult();
-        $lstPhone = explode(",", $model -> getLstPhone());
-        $results = $this->customerContactProvider->getCustomerContactWithPhones($lstPhone);
+        $results = $this->customerContactProvider->searchCustomerByPhone($model->getPhone(), $model->getCountryCode());
         $model-> setData($results);
     
 

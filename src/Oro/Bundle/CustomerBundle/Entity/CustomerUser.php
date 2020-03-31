@@ -125,6 +125,13 @@ class CustomerUser extends ExtendCustomerUser implements
      * )
      */
     protected $roles;
+    
+    /**
+     * @var File $avatar
+     * @ORM\OneToOne(targetEntity="Oro\Bundle\AttachmentBundle\Entity\File", cascade={"persist"})
+     * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    public $avatar;
 
     /**
      * @var Customer

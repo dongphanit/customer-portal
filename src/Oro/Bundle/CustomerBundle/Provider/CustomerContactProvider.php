@@ -44,6 +44,16 @@ class CustomerContactProvider
         return CustomerUser::class;
     }
 
+     /**
+     * @return []
+     */
+    public function searchCustomerByPhone($phone, $countryCode)
+    {
+        $repository = $this->getCustomerContactRepository();
+        $result = $repository->getCustomersByPhone($phone, $countryCode, $this->aclHelper);
+        return $result;
+    }
+
     /**
      * @return []
      */

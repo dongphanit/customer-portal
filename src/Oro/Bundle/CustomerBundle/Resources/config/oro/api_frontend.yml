@@ -203,13 +203,14 @@ api:
             # this entity does not have own API resource,
             # but it should be defined to correct work of "types" property
             # of the customer address API resource
-            actions: true
+            actions: true            
 
-        Oro\Bundle\CustomerBundle\Entity\CusOrganiztion:
-            documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/cus_organiztion.md'
+        Oro\Bundle\CustomerBundle\Entity\LinkCustomerOrganization:
+            documentation_resource: '@OroCustomerBundle/Resources/doc/api_frontend/link_customer_organization.md'
             # this entity does not have own API resource,
             # but it should be defined to correct work of "types" property
             # of the customer address API resource
+            
             fields:
                 customer:
                     form_options:
@@ -284,7 +285,7 @@ api:
             fields:
                 dataChannel:
                     exclude: true
-                cusOrganizations:
+                linkCustomerOrganization:
                     exclude: true
             filters:
                 fields:
