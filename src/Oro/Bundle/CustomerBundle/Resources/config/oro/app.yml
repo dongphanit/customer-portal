@@ -43,10 +43,6 @@ security:
             pattern: '^%oro_api.rest.prefix%customerusers'
             anonymous: true
             stateless: true
-        frontend_api_create_customer_demo:
-            pattern: '^%oro_api.rest.prefix%cusdemos'
-            anonymous: true
-            stateless: true
         frontend_api_create_customeraddresses:
             pattern: '^%oro_api.rest.prefix%customeraddresses'
             anonymous: true

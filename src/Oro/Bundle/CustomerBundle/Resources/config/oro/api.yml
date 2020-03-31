@@ -146,11 +146,7 @@ api:
             # but it should be defined to correct work of "types" property
             # of the customer address API resource
             actions: false
-        Oro\Bundle\CustomerBundle\Entity\CusDemo:
-            # this entity does not have own API resource,
-            # but it should be defined to correct work of "types" property
-            # of the customer address API resource
-            actions: true
+
 
         Oro\Bundle\CustomerBundle\Entity\CustomerUserAddress:
             documentation_resource: '@OroCustomerBundle/Resources/doc/api/customer_user_address.md'
