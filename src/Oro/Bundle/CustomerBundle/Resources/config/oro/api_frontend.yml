@@ -279,7 +279,7 @@ api:
             # but it should be defined to correct work of "types" property
             # of the customer user address API resource
             actions: true
-        
+
         Oro\Bundle\CustomerBundle\Entity\Customer:
             documentation_resource: '@OroCustomerBundle/Resources/doc/api/customer.md'
             fields:
