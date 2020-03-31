@@ -24,8 +24,8 @@ security:
             pattern: '^%oro_api.rest.prefix%customers'
             anonymous: true
             stateless: true
-        frontend_api_create_cus_organiztions:
-            pattern: '^%oro_api.rest.prefix%cus_organiztions'
+        frontend_api_create_cus_organizations:
+            pattern: '^%oro_api.rest.prefix%link_customer_organization'
             anonymous: true
             stateless: true
         frontend_api_create_customer_users:

@@ -36,9 +36,9 @@ oro_entity:
             alias:        customer_grid_view
             plural_alias: customer_grid_views
             
-        Oro\Bundle\CustomerBundle\Entity\CusOrganiztion:
-            alias:        cus_organiztion
-            plural_alias: cus_organiztions
+        Oro\Bundle\CustomerBundle\Entity\LinkCustomerOrganization:
+            alias:        link_customer_organization
+            plural_alias: link_customer_organizations
 
     virtual_fields:
         Oro\Bundle\CustomerBundle\Entity\CustomerUser:
