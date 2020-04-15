@@ -552,14 +552,15 @@ class CustomerUser extends ExtendCustomerUser implements
      *
      * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      * @ConfigField(
-     *      defaultValues={
-     *          "importexport"={
-     *              "excluded"=true
-     *          }
+     *  defaultValues={
+     *      "entity"={
+     *          "contact_information"="phone"
      *      }
+     *  }
      * )
      */
     protected $phone;
+
 
 
     /**

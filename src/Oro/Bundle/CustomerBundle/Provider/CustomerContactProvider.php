@@ -57,12 +57,12 @@ class CustomerContactProvider
     /**
      * @return []
      */
-    public function getCustomerContactWithPhones($lstPhone)
+    public function suggestCustomersByPhones($lstPhone, $organizationId)
     {
         
         $repository = $this->getCustomerContactRepository();
         
-        $result = $repository->getCustomersWithLstPhone($lstPhone, $this->aclHelper);
+        $result = $repository->suggestCustomersByPhones($lstPhone, $organizationId, $this->aclHelper);
 
 
         return $result;

@@ -75,7 +75,7 @@ services:
         arguments:
             - '@oro_customer_user.manager'
         tags:
-            - { name: oro.api.processor, action: customize_form_data, event: post_validate, parentAction: create, class: Oro\Bundle\CustomerBundle\Entity\CustomerUser }
+            - { name: oro.api.processor, action: customize_form_data, event: post_validate, class: Oro\Bundle\CustomerBundle\Entity\CustomerUser }
 
     oro_customer.api.customer_is_friends:
         class: Oro\Bundle\CustomerBundle\Api\Processor\ComputeCustomers
@@ -83,7 +83,7 @@ services:
             - '@oro_customer_user.manager'
             - '@oro_security.token_accessor'
         tags:
-            - { name: oro.api.processor, action: customize_loaded_data,  collection: true ,requestType: rest, class: Oro\Bundle\CustomerBundle\Entity\Customer, priority: -10}
+            - { name: oro.api.processor, action: customize_loaded_data,  collection: true ,requestType: rest, parentAction: get_list, class: Oro\Bundle\CustomerBundle\Entity\Customer, priority: -10}
             
     oro_customer.api.addresses.fix_primary_addresses:
         class: Oro\Bundle\AddressBundle\Api\Processor\FixPrimaryAddresses
@@ -109,6 +109,8 @@ services:
         arguments:
             - 'frontend'
             - '@oro_customer.provider.customercontact'
+            - '@oro_attachment.file_manager'
+            - '@oro_security.token_accessor'
         tags:
             - { name: oro.api.processor, action: create, group: save_data,  class: Oro\Bundle\CustomerBundle\Api\Model\Contact }
 
@@ -118,6 +120,7 @@ services:
         arguments:
             - 'frontend'
             - '@oro_customer.provider.customercontact'
+            - '@oro_attachment.file_manager'
         tags:
             - { name: oro.api.processor, action: create, group: save_data,  class: Oro\Bundle\CustomerBundle\Api\Model\SearchByPhone }
 

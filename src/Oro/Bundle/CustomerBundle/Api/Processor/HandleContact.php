@@ -18,6 +18,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Oro\Bundle\CustomerBundle\Provider\CustomerContactProvider;
+use Oro\Bundle\AttachmentBundle\Manager\FileManager;
+use Oro\Bundle\SecurityBundle\Authentication\TokenAccessorInterface;
+
 /**
  * Checks whether the login credentials are valid
  * and if so, sets API access key of authenticated customer user to the model.
@@ -39,14 +42,24 @@ class HandleContact implements ProcessorInterface
     /** @var TranslatorInterface */
     private $translator;
 
+    /** @var FileManager */
+    private $fileManager;
+
+    /** @var TokenAccessorInterface */
+    private $tokenAccessor;
+
     /**
      * @param string                          $authenticationProviderKey
      */
     public function __construct(
         string $authenticationProviderKey,
-        CustomerContactProvider $customerContactProvider
+        CustomerContactProvider $customerContactProvider,
+        FileManager $fileManager,
+        TokenAccessorInterface $tokenAccessor
     ) {
         $this->customerContactProvider = $customerContactProvider;
+        $this->fileManager = $fileManager;
+        $this->tokenAccessor = $tokenAccessor;
     }
 
     function debug_to_console($data) {
@@ -66,12 +79,23 @@ class HandleContact implements ProcessorInterface
 
         $model = $context->getResult();
         $lstPhone = explode(",", $model -> getLstPhone());
-        $results = $this->customerContactProvider->getCustomerContactWithPhones($lstPhone);
+        $user = $this->tokenAccessor->getUser();
+        $organizationId = $user->getOrganization()->getId();
+        $results = $this->customerContactProvider->suggestCustomersByPhones($lstPhone, $organizationId);
+        foreach ($results as &$value) {
+            $content = '';
+            if ($value['filename'] != null){
+                $content = base64_encode($this->fileManager->getFileContent($value['filename']));
+            }
+           
+            $value = $value['0'];
+            $value['avatar']= $content;
+        }
         $model-> setData($results);
     
 
         // $repository = $this->getCustomerRepository();
-        // $children = $repository->getCustomersWithLstPhone($model->getLstPhone(), $this->aclHelper);
+        // $children = $repository->suggestCustomersByPhones($model->getLstPhone(), $this->aclHelper);
 
         // throw new \LogicException(sprintf(
         //     'Invalid authentication provider. The provider key is "%s".',

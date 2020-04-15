@@ -8,6 +8,7 @@ use Oro\Bundle\CustomerBundle\Entity\CustomerGroup;
 use Oro\Bundle\EntityBundle\ORM\Repository\BatchIteratorInterface;
 use Oro\Bundle\EntityBundle\ORM\Repository\BatchIteratorTrait;
 use Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * Doctrine repository for Oro\Bundle\CustomerBundle\Entity\Customer entity
@@ -52,6 +53,7 @@ class CustomerRepository extends EntityRepository implements BatchIteratorInterf
     {
         $qb = $this->createQueryBuilder('customer');
         $qb->select()
+            ->leftJoin('customer.avatar', 'avatar')->addSelect("avatar.filename") 
              ->andWhere($qb->expr()->andX(
                 $qb->expr()->eq('customer.phone', $phone),
                 $qb->expr()->orX(
@@ -69,19 +71,24 @@ class CustomerRepository extends EntityRepository implements BatchIteratorInterf
      * @param AclHelper $aclHelper
      * @return array
      */
-    public function getCustomersWithLstPhone($lstPhone, AclHelper $aclHelper = null)
+    public function suggestCustomersByPhones($lstPhone, $organizationId, AclHelper $aclHelper = null)
     {
         $phones = array($lstPhone);
         $qb = $this->createQueryBuilder('customer');
         $qb->select()
-            ->leftJoin('customer.linkCustomersOrganizations', 'cus_org')->addSelect("cus_org") 
-            ->andWhere($qb->expr()->andX(
-                $qb->expr()->in('customer.phone', $lstPhone),
-                $qb->expr()->orX(
-                    $qb->expr()->eq('cus_org.status', '2'),// 2 customer requested friends
-                    $qb->expr()->isNull('cus_org.status')
+            ->leftJoin('customer.linkCustomersOrganizations', 'cus_org',  Expr\Join::WITH, 'cus_org.organization = :organization')->addSelect("cus_org") 
+            ->leftJoin('customer.avatar', 'avatar')->addSelect("avatar.filename") 
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->eq('cus_org.status', '2'),// 2 customer requested friends
+                $qb->expr()->andX(
+                    $qb->expr()->in('customer.phone', $lstPhone),
+                    $qb->expr()->orX(
+                        $qb->expr()->isNull('cus_org.status'),
+                        $qb->expr()->eq('cus_org.status', '2')
+                    )
                     ) 
-            ));
+            ))
+            ->setParameter('organization', $organizationId);
 
         $query = $qb->getQuery();    
         return $query->getArrayResult();
