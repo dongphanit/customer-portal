@@ -116,8 +116,22 @@ api:
                 lastLogin:
                     form_options:
                         mapped: false
+              
+
+
+            filters:
+                fields:
+                    phone: 
+                        operators: [ '=' ]
+                        
             actions:
                 create:
+                    fields:
+                        password:
+                            exclude: false # set manually because this field is excluded globally
+                            form_options:
+                                property_path: plainPassword
+                update:
                     fields:
                         password:
                             exclude: false # set manually because this field is excluded globally
@@ -285,7 +299,7 @@ api:
             fields:
                 dataChannel:
                     exclude: true
-                linkCustomerOrganization:
+                linkCustomersOrganizations:
                     exclude: true
             filters:
                 fields:

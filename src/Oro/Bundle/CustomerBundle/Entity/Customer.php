@@ -12,7 +12,7 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
-
+use Oro\Bundle\AttachmentBundle\Entity\File;
 /**
  * Entity represents Customer and handles all related mappings
  *
@@ -312,9 +312,10 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
     /**
      * @var File $avatar
      * @ORM\OneToOne(targetEntity="Oro\Bundle\AttachmentBundle\Entity\File", cascade={"persist"})
-     * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @ORM\JoinColumn(name="avatar_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * 
      */
-    public $avatar;
+    protected $avatar;
     
     /**
      * @var Collection|LinkCustomerOrganization[]
@@ -615,6 +616,27 @@ class Customer extends ExtendCustomer implements DatesAwareInterface
     {
         return $this->group;
     }
+
+    /**
+     * @param File $file
+     *
+     * @return $this
+     */
+    public function setAvatar( $avatar = null)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
 
     /**
      * @param Customer $child

@@ -54,13 +54,24 @@ class ComputeCustomers implements ProcessorInterface
         $linkCustomersOrganizations = $context->getResultFieldName('linkCustomersOrganizations');
         // $organization = $context->getResultFieldName('organization');
         // $idname = $context->getResultFieldName('id');
+        
         $data = $context->getData();
         $str = json_encode($data);
+        
         $dataJson = json_decode($str);
+        if (is_array($dataJson) == false){
+            return;
+        }
         $index = 0;
         foreach ($data as $key => $item) {
             $itemJson = $dataJson[$index];
+            if(property_exists($itemJson, 'linkCustomersOrganizations') == false)
+            {
+                return;
+            }
             $links = $itemJson->linkCustomersOrganizations;
+            
+
             if (sizeof($links) > 0){
                 if (property_exists($links[0], 'organization')){
                     foreach ($links as &$value) {
@@ -71,7 +82,11 @@ class ComputeCustomers implements ProcessorInterface
                     }
                     
                 }
+                else{
+                    return;
+                }
             }
+            
             $index = $index + 1;
         }
         
